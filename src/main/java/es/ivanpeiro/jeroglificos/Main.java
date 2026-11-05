@@ -1,5 +1,6 @@
 package es.ivanpeiro.jeroglificos;
 import java.util.Scanner;
+import java.util.ArrayList;
 
 public class Main {
 
@@ -11,42 +12,42 @@ public class Main {
 		Scanner sc = new Scanner(System.in);
 		String usrInput;
 		int usrNumber;
+        ArrayList<String> jeroglificos = new ArrayList<String>();
 
-		while(true) {
-				System.out.print("Input a number: ");
-				usrInput = sc.nextLine();
 
-                if(usrInput.charAt(0) == 'e') break;
-		
-				try {
-						usrNumber = Integer.parseInt(usrInput);
-				} catch (NumberFormatException e) {
-						System.out.println("Please input a valid number");
-						usrNumber = 0;
-						continue;
-				}
+		while(sc.hasNextInt()) {
+            usrNumber = sc.nextInt();
+            
+            if(usrNumber == 0) {
+                for (int i = 0; i < jeroglificos.size(); i++) {
+                    System.out.println(jeroglificos.get(i));    
+                }
+                break;
+            }
 				
-                printNumbers(usrNumber);
+            jeroglificos.add(transformNumbers(usrNumber));
 		}
     }
 
-    static void printNumbers(int num) {
+    static String transformNumbers(int num) {
         int locNum = num;
         int result;
+
+        String output = "";
 
         for (int i = 0; i < 7; i++) {
             result = locNum / numberDividers[i];
 
             if(result > 0) {
                 for (int j = 0; j < result; j++) {
-                   System.out.print(numberCharacters[i]); 
+                    output += numberCharacters[i];
                 }
             }
 
             locNum -= result * numberDividers[i];
         }
         
-        System.out.println();
+        return output;
     }
 
 }
